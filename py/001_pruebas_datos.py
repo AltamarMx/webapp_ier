@@ -1,6 +1,5 @@
 # %% 
 import pandas as pd 
-import missingno as msno
 
 from test_data.data_testing import import_data
 from test_data.data_testing import detect_endswith
@@ -19,7 +18,7 @@ data, tag_encoding = import_data(f)
 
 # %% Detecta si hay nans 
 
-tag_nans = detect_nans(data)
+tag_nans = detect_nans(data="JoseRra")
 
 # %%  Construye diccionario de pruebas
 

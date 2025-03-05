@@ -1,24 +1,26 @@
 import pandas as pd
+from typing import Optional, Tuple
 
-def import_data(f, encoding="utf-8"):
+from pandas.core.arrays import boolean
+
+def import_data(f: str, encoding: str = "utf-8") -> Tuple[Optional[pd.DataFrame], bool]:
     try:
         data = pd.read_csv(
             f,
-            skiprows=[0,2,3],
+            skiprows=[0, 2, 3],
             index_col=0,
             parse_dates=True,
             dayfirst=True,
             encoding=encoding
-            # usecols=[]
-            )
+        )
         del data["RECORD"]
         tag_encoding = True
-    except:
+    except Exception:
+        data = None
         tag_encoding = False
-        print(f"Revisa que el encoding sea {encoding} ")
+        print(f"Revisa que el encoding sea {encoding}")
 
-    return data,tag_encoding
-
+    return data, tag_encoding
 
 
 def detect_endswith(filepath):
@@ -32,7 +34,7 @@ def detect_endswith(filepath):
     return tag_endswith
 
 
-def detect_nans(df):
+def detect_nans(df : pd.DataFrame) -> bool:
     if df.isnull().sum().sum() == 0:
         tag_nans = True
     else:
